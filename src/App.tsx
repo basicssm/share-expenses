@@ -1,48 +1,18 @@
 import React, { useEffect, useState }  from 'react';
 import './App.css';
-import List from './components/list';
+import { friendsMock, expensesMock } from './mocks';
+import Friends from './components/Friends';
+import Expenses from './components/Expenses';
+import { FriendType, ExpenseType } from './types';
 
 function App() {
-  const friendsMock: {id: number, name: string }[] = [
-    {
-      id: 1,
-      name: 'Francisco Navarro',
-    }, {
-      id: 2,
-      name: 'Carlos Barrón'
-    }, {
-      id: 3,
-      name: 'Claudia Caballero'
-    }, {
-      id: 4,
-      name: 'Fede Garcia'
-    }
-  ];
-  const expensesMock: { id: number, friend: number, description: string, amount: number, date:string }[] = [
-    {
-      id: 1,
-      friend: 2,
-      description: 'Casa de campo',
-      amount: 350,
-      date: ''
-    },{
-      id: 2,
-      friend: 3,
-      description: 'Comida asturiano',
-      amount: 350,
-      date: ''
-    }
-  ];
-
-  const [ isLoading, setIsLoading ] = useState(true);
-  const [ expenses, setExpenses ] = useState([]);
-  const [ friends, setFriends ] = useState([]);
+  const [ friends, setFriends ] = useState<FriendType[]>([]);
+  const [ expenses, setExpenses ] = useState<ExpenseType[]>([]);
 
   useEffect(() => {
-    setIsLoading(false);
-    setExpenses(expensesMock);
     setFriends(friendsMock);
-  }, [expensesMock, friendsMock])
+    setExpenses(expensesMock);
+  }, [])
 
   return (
     <div className="App">
@@ -51,13 +21,8 @@ function App() {
           Share expenses and don't lose friends.
         </p>
       </header>
-      {isLoading 
-       ? <p>loading data...</p>
-      : <>
-          <List items={expenses} typeItem="expense" />
-          <List items={friends} typeItem="expense" />
-        </>
-      }
+      <Expenses expenses={expenses} friends={friends}/>
+      <Friends friends={friends}/>
     </div>
   );
 }
