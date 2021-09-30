@@ -8,6 +8,5 @@ export type ExpenseType = {
 
 export type FriendType = {
     id: number,
-    name: string,
-    amount: number
+    name: string
 };

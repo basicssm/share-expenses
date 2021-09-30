@@ -3,23 +3,19 @@ import { ExpenseType, FriendType } from './types';
 export const friendsMock: FriendType[] = [
   {
     id: 1,
-    name: "Francisco Navarro",
-    amount: 1500
+    name: "Francisco Navarro"
   },
   {
     id: 2,
-    name: "Carlos Barrón",
-    amount: 44
+    name: "Carlos Barrón"
   },
   {
     id: 3,
-    name: "Claudia Caballero",
-    amount: 0
+    name: "Claudia Caballero"
   },
   {
     id: 4,
-    name: "Fede Garcia",
-    amount: 0
+    name: "Nikolaa Verle"
   },
 ];
 
@@ -37,5 +33,12 @@ export const expensesMock: ExpenseType[] = [
     description: "Comida asturiano",
     amount: 50,
     date: "2021-09-10",
+  },
+  {
+    id: 3,
+    friend: 4,
+    description: "Cervezas",
+    amount: 25,
+    date: "2021-09-30 11:01:23",
   },
 ];

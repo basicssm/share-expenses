@@ -15,39 +15,20 @@ const Expenses = ({ expenses, friends }: { expenses: ExpenseType[], friends: Fri
         <ul>
             {
             expensesParsed.map(({ id, description, amount, date, friendName } : ExpenseParsed) =>
-                <li key={`Expense${id}`}>
-                    <div>{friendName} {amount} €</div>
-                    <div>{description} {_getWhenString(date)}</div>
+                <li key={`Expense${id}`} className="expense">
+                    <div>
+                        <span className="friend">{friendName}</span>
+                        <span className="amount">{amount} €</span>
+                    </div>
+                    <div>
+                        <span className="description">{description}</span>
+                        <span className="date">{moment(date).fromNow()}</span>
+                    </div>
                 </li>
             )
             }
         </ul>
     </>);
 };
-
-const _getWhenString = (date:string) => {
-    const today = moment();
-    const dateExpense = moment(date);
-    let scale = 'seconds';
-    let diff = today.diff(dateExpense, 'seconds');
-
-    if(diff >= 60) {
-        diff = today.diff(dateExpense, 'minutes');
-        scale = 'minutes';
-
-        if(diff >= 60) {
-            diff = today.diff(dateExpense, 'hours');
-            scale = 'hours';
-
-            if(diff >= 24) {
-                diff = today.diff(dateExpense, 'days');
-                scale = 'days';
-            }
-        }
-    }
-
-    return `${Math.abs(diff)} ${scale} ago`;
-}
-
 
 export default Expenses;

@@ -1,18 +1,33 @@
-import React, { useEffect, useState }  from 'react';
+import React, { useState }  from 'react';
 import './App.css';
 import { friendsMock, expensesMock } from './mocks';
 import Friends from './components/Friends';
 import Expenses from './components/Expenses';
+import Button from './components/Button';
+import FriendForm from './components/FriendForm';
+import ExpenseForm from './components/ExpenseForm';
 import { FriendType, ExpenseType } from './types';
 
 function App() {
-  const [ friends, setFriends ] = useState<FriendType[]>([]);
-  const [ expenses, setExpenses ] = useState<ExpenseType[]>([]);
+  const [ friends, setFriends ] = useState<FriendType[]>(friendsMock);
+  const [ expenses, setExpenses ] = useState<ExpenseType[]>(expensesMock);
+  const [ visibleFriendForm, setVisibleFriendForm ] = useState<Boolean>(false);
+  const [ visibleExpenseForm, setVisibleExpenseForm ] = useState<Boolean>(false);
 
-  useEffect(() => {
-    setFriends(friendsMock);
-    setExpenses(expensesMock);
-  }, [])
+  const _showAddExpense:() => void = () => {
+    setVisibleExpenseForm(true);
+  };
+  const _showAddFriend:() => void = () => {
+    setVisibleFriendForm(true);
+  };
+  const addFriend:(newFriend:FriendType) => void = (newFriend) => {
+    setFriends([...friends, newFriend]);
+    setVisibleFriendForm(false);
+  }
+  const addExpense:(newExpense:ExpenseType) => void = (newExpense) => {
+    setExpenses([...expenses, newExpense]);
+    setVisibleExpenseForm(false);
+  }
 
   return (
     <div className="App">
@@ -21,8 +36,17 @@ function App() {
           Share expenses and don't lose friends.
         </p>
       </header>
-      <Expenses expenses={expenses} friends={friends}/>
-      <Friends friends={friends}/>
+      <div className="wrapper">
+        <Expenses expenses={expenses} friends={friends}/>
+        <Friends  expenses={expenses} friends={friends}/>
+        <nav>
+          <Button label="Add expense" onClick={_showAddExpense}/>
+          <Button label="Add friend"  onClick={_showAddFriend} />
+        </nav>
+      </div>
+
+      { visibleFriendForm ? <FriendForm friends={friends} addFriend={addFriend} /> : '' }
+      { visibleExpenseForm ? <ExpenseForm friends={friends} expenses={expenses} addExpense={addExpense} /> : '' }
     </div>
   );
 }
